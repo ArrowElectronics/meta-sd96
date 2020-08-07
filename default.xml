@@ -2,16 +2,14 @@
 <manifest>
   <remote fetch="git://git.yoctoproject.org" name="yocto" />
   <remote fetch="git://git.openembedded.org" name="oe" />
-  <remote fetch="git://code.qt.io/yocto" name="qt5" />
-  <remote fetch="https://github.com/linux4sam" name="linux4sam" />
   <remote fetch="https://github.com" name="github"/>
   
   <default remote="yocto"/>
   
-  <project name="poky" path="poky" revision="2bd2f56d4163218662b01712feff9719ace66e31"/>
+  <project name="poky" path="poky" revision="dunfell"/>
   <project name="meta-openembedded" path="meta-openembedded" remote="oe" revision="dunfell"/>
-  <project name="meta-qt5" path="meta-qt5" remote="qt5" revision="20331bd6b696793a7aa23a3c035e5ebcf3075aa3"/>
-  <project name="meta-atmel" path="meta-atmel" remote="linux4sam" revision="dunfell"/>
+  <project name="linux4sam/meta-atmel" path="meta-atmel" remote="github" revision="dunfell"/>
+  <project name="aws/meta-aws" path="meta-aws" remote="github" revision="dunfell"/>
 
   <project name="bkardosa/meta-sd96" path="meta-sd96" remote="github" revision="dunfell">
     <copyfile src="build-sd96/conf/local.conf" dest="poky/build-sd96/conf/local.conf"/>

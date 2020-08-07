@@ -23,6 +23,8 @@ simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/warrior
 
     - the following commands need to be executed for rebuilding the image:
       $ cd poky
+      $ export TEMPLATECONF=${TEMPLATECONF:-../meta-atmel/conf}
+      $ export MACHINE=sama5d27-sd96
       $ source oe-init-build-env build-sd96
       $ bitbake core-image-minimal
 
