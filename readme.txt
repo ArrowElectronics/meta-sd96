@@ -8,7 +8,7 @@ board. It is possible to boot from NOR flash + uSD card or only from uSD card.
     For creating the build environment one needs to use the 'repo' tool which
 is available in most Linux distributions. The build process will follow the
 "meta-atmel" way, only the build environment initialization is different and
-simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/warrior
+simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/dunfell
 
     The required steps:
     - create a working directory and enter it
