@@ -17,6 +17,7 @@ IMAGE_INSTALL = "\
     packagegroup-base-bluetooth \
     packagegroup-base-usbgadget \
     kernel-modules \
+    chkconfig \
     kmod \
     python3 \
     python3-pip \
@@ -58,6 +59,7 @@ IMAGE_INSTALL = "\
     ppp \
     minicom \
     nano \
+    nginx \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 

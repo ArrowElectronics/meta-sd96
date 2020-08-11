@@ -17,8 +17,7 @@
 
     Setting up WiFi in AP mode
 
-    - after power up disable docker and enable hostapd:
-      # chkconfig docker.init off
+    - after power up enable hostapd:
       # chkconfig hostapd on
 
     - change wlan0 settings

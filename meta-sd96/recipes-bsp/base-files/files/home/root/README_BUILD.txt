@@ -1,4 +1,4 @@
-    meta-hd96 layer will create various uSD card images running on the Shield96
+    meta-sd96 layer will create various uSD card images running on the Shield96
 board. It is possible to boot from NOR flash + uSD card or only from uSD card.
 
 
@@ -8,12 +8,12 @@ board. It is possible to boot from NOR flash + uSD card or only from uSD card.
     For creating the build environment one needs to use the 'repo' tool which
 is available in most Linux distributions. The build process will follow the
 "meta-atmel" way, only the build environment initialization is different and
-simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/warrior
+simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/dunfell
 
     The required steps:
     - create a working directory and enter it
     - initialize the build folders by issuing:
-      $ repo init -u https://github.com/bkardosa/meta-hd96.git -b warrior_v1.3
+      $ repo init -u https://github.com/bkardosa/meta-sd96.git -b dunfell
       $ repo sync
 
     - the above commands may display various warning or error messages which can be ignored if the
@@ -23,7 +23,9 @@ simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/warrior
 
     - the following commands need to be executed for rebuilding the image:
       $ cd poky
-      $ source oe-init-build-env build-microchip
+      $ export TEMPLATECONF=${TEMPLATECONF:-../meta-atmel/conf}
+      $ export MACHINE=sama5d27-sd96
+      $ source oe-init-build-env build-sd96
       $ bitbake hostapd-image
 
     Rebuilding the image will take 1-2 hours or more depending on machine and
@@ -35,8 +37,8 @@ internet speed and require around 25GiB disk space.
     Creating uSD card image
 
     - copy initial filesystem image to uSD card:
-      $ cd tmp/deploy/images/sama5d27-hd96/
-      $ sudo dd if=hostapd-image-sama5d27-hd96.wic bs=1M of=/dev/sdX && sync
+      $ cd tmp/deploy/images/sama5d27-sd96/
+      $ sudo dd if=hostapd-image-sama5d27-sd96.wic bs=1M of=/dev/sdX && sync
       where /dev/sdX is the location of an UNMOUNTED uSD card
 
     Booting from uSD card
@@ -52,7 +54,7 @@ internet speed and require around 25GiB disk space.
 
     Writing at91bootstrap into NOR flash and booting from NOR
 
-    - prepare at91bootstrap for SAM-BA (still in .../tmp/deploy/images/sama5d27-hd96 folder ):
+    - prepare at91bootstrap for SAM-BA (still in .../tmp/deploy/images/sama5d27-sd96 folder ):
       $ cp at91bootstrap.bin <SAM-BA folder>
 
     - on Shield96 board remove J3, remove uSD card, connect J10 to PC and press nRST
