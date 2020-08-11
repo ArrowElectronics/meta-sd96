@@ -1,0 +1,30 @@
+# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+
+# The loopback interface
+auto lo
+iface lo inet loopback
+
+# Wireless interfaces
+auto wlan0
+iface wlan0 inet dhcp
+        wireless_mode managed
+        wireless_essid any
+        wpa-driver wext
+        wpa-conf /etc/wpa_supplicant.conf
+
+# Wired interfaces
+auto eth0
+iface eth0 inet dhcp
+
+# NB-IoT through Quectel BG96
+iface ppp0 inet ppp
+        provider quectel-ppp
+        pre-up /etc/network/powerkey_bg96.py 200 > /dev/null
+
+# usb gadget ethernet
+auto usb0
+iface usb0 inet static
+        address 192.168.7.1
+        netmask 255.255.255.0
+        post-up /usr/sbin/udhcpd /etc/udhcpd_usb0.conf
+

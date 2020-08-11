@@ -1,0 +1,26 @@
+# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+
+# The loopback interface
+auto lo
+iface lo inet loopback
+
+# Wireless interfaces
+auto wlan0
+iface wlan0 inet static
+        address 192.168.8.1
+        netmask 255.255.255.0
+        network 192.168.8.0
+        post-up /usr/sbin/udhcpd /etc/udhcpd_wlan0.conf
+
+# Wired interfaces
+auto eth0
+iface eth0 inet dhcp
+        post-up /usr/sbin/iptables-restore < /etc/iptables/share_eth0
+
+# NB-IoT through Quectel BG96
+iface ppp0 inet ppp
+        provider quectel-ppp
+        pre-up /etc/network/powerkey_bg96.py 200 > /dev/null
+        post-up /usr/sbin/iptables-restore < /etc/iptables/share_ppp0
+        post-down /usr/sbin/iptables-restore < /etc/iptables/share_eth0
+
