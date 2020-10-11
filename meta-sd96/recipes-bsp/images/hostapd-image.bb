@@ -60,6 +60,15 @@ IMAGE_INSTALL = "\
     minicom \
     nano \
     nginx \
+    ntp \
+    avahi-daemon \
+    libavahi-gobject \
+    libavahi-common \
+    libavahi-core \
+    libavahi-client \
+    libavahi-glib \
+    avahi-utils \
+    lsb \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 
