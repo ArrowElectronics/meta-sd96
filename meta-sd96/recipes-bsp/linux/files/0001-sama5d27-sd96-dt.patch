@@ -1,6 +1,6 @@
 diff -Naurw ./arch/arm/boot/dts/at91-sama5d27_som1.dtsi ../kernel-source/arch/arm/boot/dts/at91-sama5d27_som1.dtsi
---- ./arch/arm/boot/dts/at91-sama5d27_som1.dtsi	2020-08-10 14:01:34.301723855 +0200
-+++ ../kernel-source/arch/arm/boot/dts/at91-sama5d27_som1.dtsi	2020-08-10 14:02:45.462571276 +0200
+--- ./arch/arm/boot/dts/at91-sama5d27_som1.dtsi 2020-08-10 14:01:34.301723855 +0200
++++ ../kernel-source/arch/arm/boot/dts/at91-sama5d27_som1.dtsi  2020-08-10 14:02:45.462571276 +0200
 @@ -23,7 +23,7 @@
  		};
  
@@ -12,8 +12,8 @@ diff -Naurw ./arch/arm/boot/dts/at91-sama5d27_som1.dtsi ../kernel-source/arch/ar
  
 diff -Naurw ./arch/arm/boot/dts/sama5d27_sd96.dts ../kernel-source/arch/arm/boot/dts/sama5d27_sd96.dts
 --- ./arch/arm/boot/dts/sama5d27_sd96.dts	1970-01-01 01:00:00.000000000 +0100
-+++ ../kernel-source/arch/arm/boot/dts/sama5d27_sd96.dts	2020-08-10 14:02:45.462571276 +0200
-@@ -0,0 +1,618 @@
++++ ../kernel-source/arch/arm/boot/dts/sama5d27_sd96.dts	2020-10-12 10:18:26.858109120 +0200
+@@ -0,0 +1,646 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * at91-sama5d27_som1_ek.dts - Device Tree file for SAMA5D27-SOM1-EK board
@@ -565,6 +565,34 @@ diff -Naurw ./arch/arm/boot/dts/sama5d27_sd96.dts ../kernel-source/arch/arm/boot
 +			label = "USER";
 +			gpios = <&pioA PIN_PA29 GPIO_ACTIVE_LOW>;
 +			linux,code = <0x104>;
++			wakeup-source;
++		};
++
++		pb5 {
++			label = "DIN-1";
++			gpios = <&pioA PIN_PB26 GPIO_ACTIVE_LOW>;
++			linux,code = <0x105>;
++			wakeup-source;
++		};
++
++		pb6 {
++			label = "DIN-2";
++			gpios = <&pioA PIN_PB21 GPIO_ACTIVE_LOW>;
++			linux,code = <0x106>;
++			wakeup-source;
++		};
++
++		pb7 {
++			label = "DIN-3";
++			gpios = <&pioA PIN_PB27 GPIO_ACTIVE_LOW>;
++			linux,code = <0x107>;
++			wakeup-source;
++		};
++
++		pb8 {
++			label = "DIN-4";
++			gpios = <&pioA PIN_PB12 GPIO_ACTIVE_LOW>;
++			linux,code = <0x108>;
 +			wakeup-source;
 +		};
 +	};
