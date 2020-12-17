@@ -1,6 +1,6 @@
 diff -Naurw ./board/Config.in ../git/board/Config.in
---- ./board/Config.in	2020-08-07 13:15:44.771210840 +0200
-+++ ../git/board/Config.in	2020-08-07 13:13:44.891936132 +0200
+--- ./board/Config.in	2020-12-17 09:57:56.502365343 +0100
++++ ../git/board/Config.in	2020-12-17 09:57:43.151013205 +0100
 @@ -25,6 +25,7 @@
  source "board/sama5d4_xplained/Config.in.board"
  source "board/sama5d2_ptc_ek/Config.in.board"
@@ -9,29 +9,37 @@ diff -Naurw ./board/Config.in ../git/board/Config.in
  source "board/sama5d27_som1_ek/Config.in.board"
  source "board/sama5d27_wlsom1_ek/Config.in.board"
  source "board/sama5d2_lpddr2sip_vb/Config.in.board"
-@@ -55,6 +56,7 @@
- 	default "sama5d4ek" if CONFIG_SAMA5D4EK
- 	default "sama5d2_ptc_ek" if CONFIG_SAMA5D2_PTC_EK
- 	default "sama5d2_xplained" if CONFIG_SAMA5D2_XPLAINED
-+        default "sama5d27_sd96" if CONFIG_SAMA5D27_SD96
- 	default "sama5d27_som1_ek" if CONFIG_SAMA5D27_SOM1_EK
- 	default "sama5d27_wlsom1_ek" if CONFIG_SAMA5D27_WLSOM1_EK
- 	default "sama5d2_lpddr2sip_vb" if CONFIG_SAMA5D2_LPDDR2SIP_VB
+@@ -56,6 +57,7 @@
+ 	default "sama5d4ek" if SAMA5D4EK
+ 	default "sama5d2_ptc_ek" if SAMA5D2_PTC_EK
+ 	default "sama5d2_xplained" if SAMA5D2_XPLAINED
++	default "sama5d27_sd96" if SAMA5D27_SD96
+ 	default "sama5d27_som1_ek" if SAMA5D27_SOM1_EK
+ 	default "sama5d27_wlsom1_ek" if SAMA5D27_WLSOM1_EK
+ 	default "sama5d2_lpddr2sip_vb" if SAMA5D2_LPDDR2SIP_VB
+@@ -412,6 +414,7 @@
+ 	default CPU_CLK_492MHZ if SAMA5D27_SOM1_EK
+ 	default CPU_CLK_492MHZ if SAMA5D27_WLSOM1_EK
+ 	default CPU_CLK_498MHZ if SAMA5D2_LPDDR2SIP_VB
++	default CPU_CLK_498MHZ if SAMA5D27_SD96
+ 
+ 
+ config	CPU_CLK_166MHZ
 diff -Naurw ./board/sama5d27_sd96/board.mk ../git/board/sama5d27_sd96/board.mk
 --- ./board/sama5d27_sd96/board.mk	1970-01-01 01:00:00.000000000 +0100
-+++ ../git/board/sama5d27_sd96/board.mk	2020-08-07 12:28:19.576618683 +0200
++++ ../git/board/sama5d27_sd96/board.mk	2020-12-17 09:57:43.151013205 +0100
 @@ -0,0 +1,2 @@
 +CPPFLAGS += -DCONFIG_SAMA5D27_SD96
 +ASFLAGS += -DCONFIG_SAMA5D27_SD96
 diff -Naurw ./board/sama5d27_sd96/Config.in.board ../git/board/sama5d27_sd96/Config.in.board
 --- ./board/sama5d27_sd96/Config.in.board	1970-01-01 01:00:00.000000000 +0100
-+++ ../git/board/sama5d27_sd96/Config.in.board	2020-08-07 12:28:19.576618683 +0200
++++ ../git/board/sama5d27_sd96/Config.in.board	2020-12-17 09:57:43.151013205 +0100
 @@ -0,0 +1,12 @@
-+config CONFIG_SAMA5D27_SD96
++config SAMA5D27_SD96
 +	bool "sama5d27_sd96"
 +	select SAMA5D2
-+	select CONFIG_CPU_V7
-+	select CONFIG_DDRC
++	select CPU_V7
++	select DDRC
 +	select ALLOW_DATAFLASH
 +	select ALLOW_SDCARD
 +	select ALLOW_CPU_CLK_498MHZ
@@ -41,14 +49,14 @@ diff -Naurw ./board/sama5d27_sd96/Config.in.board ../git/board/sama5d27_sd96/Con
 +	  Use the SD96 Development board
 diff -Naurw ./board/sama5d27_sd96/Config.in.linux_arg ../git/board/sama5d27_sd96/Config.in.linux_arg
 --- ./board/sama5d27_sd96/Config.in.linux_arg	1970-01-01 01:00:00.000000000 +0100
-+++ ../git/board/sama5d27_sd96/Config.in.linux_arg	2020-08-07 12:28:19.576618683 +0200
++++ ../git/board/sama5d27_sd96/Config.in.linux_arg	2020-12-17 09:57:43.151013205 +0100
 @@ -0,0 +1,2 @@
-+config CONFIG_LINUX_KERNEL_ARG_STRING
-+	default "console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p2 rw rootwait" if CONFIG_SAMA5D27_SD96 && (CONFIG_SDCARD || CONFIG_QSPI)
++config LINUX_KERNEL_ARG_STRING
++	default "console=ttyS0,115200 earlyprintk root=/dev/mmcblk0p2 rw rootwait" if SAMA5D27_SD96 && (SDCARD || QSPI)
 diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sama5d27_sd96.c
 --- ./board/sama5d27_sd96/sama5d27_sd96.c	1970-01-01 01:00:00.000000000 +0100
-+++ ../git/board/sama5d27_sd96/sama5d27_sd96.c	2020-08-07 13:21:45.461015804 +0200
-@@ -0,0 +1,570 @@
++++ ../git/board/sama5d27_sd96/sama5d27_sd96.c	2020-12-17 09:57:43.151013205 +0100
+@@ -0,0 +1,572 @@
 +/* ----------------------------------------------------------------------------
 + *         Microchip Microcontroller Software Support
 + * ----------------------------------------------------------------------------
@@ -106,7 +114,7 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sam
 +	};
 +
 +	pio_configure(dbgu_pins);
-+	pmc_enable_periph_clock(CONFIG_SYS_DBGU_ID);
++	pmc_enable_periph_clock(CONFIG_SYS_DBGU_ID, PMC_PERIPH_CLK_DIVIDER_NA);
 +}
 +
 +static void initialize_dbgu(void)
@@ -115,7 +123,7 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sam
 +
 +	at91_dbgu_hw_init();
 +
-+	if (pmc_check_mck_h32mxdiv())
++	if (pmc_mck_check_h32mxdiv())
 +		usart_init(BAUDRATE(MASTER_CLOCK / 2, baudrate));
 +	else
 +		usart_init(BAUDRATE(MASTER_CLOCK, baudrate));
@@ -342,7 +350,7 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sam
 +
 +	ddramc_reg_config(&ddramc_reg);
 +
-+	pmc_enable_periph_clock(AT91C_ID_MPDDRC);
++	pmc_enable_periph_clock(AT91C_ID_MPDDRC, PMC_PERIPH_CLK_DIVIDER_NA);
 +	pmc_enable_system_clock(AT91C_PMC_DDR);
 +
 +	reg = AT91C_MPDDRC_RD_DATA_PATH_ONE_CYCLES;
@@ -417,7 +425,7 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sam
 +	dbg_loud("Applying VDDSDMMC errata to ID: %x\n", exid);
 +
 +	/* Enable peripheral clock */
-+	pmc_enable_periph_clock(AT91C_ID_SDMMC0);
++	pmc_enable_periph_clock(AT91C_ID_SDMMC0, PMC_PERIPH_CLK_DIVIDER_NA);
 +
 +	/* Launch calibration and wait till it's completed */
 +	reg = readl(AT91C_BASE_SDHC0 + SDMMC_CALCR);
@@ -450,7 +458,9 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sam
 +	 */
 +	pmc_init_pll(AT91C_PMC_ICPPLLA_0);
 +
-+	pmc_cfg_mck(BOARD_PRESCALER_PLLA);
++	pmc_mck_cfg_set(0, BOARD_PRESCALER_PLLA,
++			AT91C_PMC_H32MXDIV | AT91C_PMC_PLLADIV2 |
++			AT91C_PMC_MDIV | AT91C_PMC_CSS);
 +
 +	writel(AT91C_RSTC_KEY_UNLOCK | AT91C_RSTC_URSTEN,
 +	       AT91C_BASE_RSTC + RSTC_RMR);
@@ -552,7 +562,7 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sam
 +#endif
 +
 +	pio_configure(qspi_pins);
-+	pmc_enable_periph_clock(CONFIG_SYS_ID_QSPI);
++	pmc_enable_periph_clock(CONFIG_SYS_ID_QSPI, PMC_PERIPH_CLK_DIVIDER_NA);
 +}
 +#endif
 +
@@ -603,7 +613,7 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sam
 +	};
 +#endif
 +	/* First, print status of CAL for VDDSDMMC over-consumption errata */
-+	pmc_enable_periph_clock(AT91C_ID_SDMMC0);
++	pmc_enable_periph_clock(AT91C_ID_SDMMC0, PMC_PERIPH_CLK_DIVIDER_NA);
 +	reg = readl(AT91C_BASE_SDHC0 + SDMMC_CALCR);
 +	pmc_disable_periph_clock(AT91C_ID_SDMMC0);
 +
@@ -613,7 +623,7 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sam
 +	/* Deal with usual SD/MCC peripheral init sequence */
 +	pio_configure(sdmmc_pins);
 +
-+	pmc_enable_periph_clock(CONFIG_SYS_ID_SDHC);
++	pmc_enable_periph_clock(CONFIG_SYS_ID_SDHC, PMC_PERIPH_CLK_DIVIDER_NA);
 +	pmc_enable_generic_clock(CONFIG_SYS_ID_SDHC,
 +				 GCK_CSS_UPLL_CLK,
 +				 ATMEL_SDHC_GCKDIV_VALUE);
@@ -621,7 +631,7 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.c ../git/board/sama5d27_sd96/sam
 +#endif
 diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.h ../git/board/sama5d27_sd96/sama5d27_sd96.h
 --- ./board/sama5d27_sd96/sama5d27_sd96.h	1970-01-01 01:00:00.000000000 +0100
-+++ ../git/board/sama5d27_sd96/sama5d27_sd96.h	2020-08-07 12:28:19.576618683 +0200
++++ ../git/board/sama5d27_sd96/sama5d27_sd96.h	2020-12-17 09:57:43.151013205 +0100
 @@ -0,0 +1,111 @@
 +/* ----------------------------------------------------------------------------
 + *         Microchip Microcontroller Software Support
@@ -650,8 +660,8 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.h ../git/board/sama5d27_sd96/sam
 + * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 + * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 + */
-+#ifndef __SAMA5D27_SD96_H__
-+#define __SAMA5D27_SD96_H__
++#ifndef __SAMA5D2_SD96_H__
++#define __SAMA5D2_SD96_H__
 +
 +/*
 + * PMC Settings
@@ -736,7 +746,7 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96.h ../git/board/sama5d27_sd96/sam
 +#endif
 diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96qspi_linux_image_dt_defconfig ../git/board/sama5d27_sd96/sama5d27_sd96qspi_linux_image_dt_defconfig
 --- ./board/sama5d27_sd96/sama5d27_sd96qspi_linux_image_dt_defconfig	1970-01-01 01:00:00.000000000 +0100
-+++ ../git/board/sama5d27_sd96/sama5d27_sd96qspi_linux_image_dt_defconfig	2020-08-07 12:28:19.576618683 +0200
++++ ../git/board/sama5d27_sd96/sama5d27_sd96qspi_linux_image_dt_defconfig	2020-12-17 09:57:43.151013205 +0100
 @@ -0,0 +1,12 @@
 +CONFIG_SAMA5D27_SD96=y
 +CONFIG_RAM_128MB=y
@@ -750,32 +760,9 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96qspi_linux_image_dt_defconfig ../
 +CONFIG_OF_OFFSET="0xc0000"
 +CONFIG_DEBUG=y
 +# CONFIG_ENTER_NWD is not set
-diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96sd_linux_image_dt_defconfig ../git/board/sama5d27_sd96/sama5d27_sd96sd_linux_image_dt_defconfig
---- ./board/sama5d27_sd96/sama5d27_sd96sd_linux_image_dt_defconfig	1970-01-01 01:00:00.000000000 +0100
-+++ ../git/board/sama5d27_sd96/sama5d27_sd96sd_linux_image_dt_defconfig	2020-08-07 12:28:19.576618683 +0200
-@@ -0,0 +1,8 @@
-+CONFIG_SAMA5D27_SD96=y
-+CONFIG_RAM_128MB=y
-+CONFIG_SDCARD=y
-+CONFIG_LOAD_LINUX=y
-+CONFIG_OVERRIDE_CMDLINE=y
-+CONFIG_IMAGE_NAME="zImage"
-+CONFIG_DEBUG=y
-+# CONFIG_ENTER_NWD is not set
-diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96sd_uboot_defconfig ../git/board/sama5d27_sd96/sama5d27_sd96sd_uboot_defconfig
---- ./board/sama5d27_sd96/sama5d27_sd96sd_uboot_defconfig	1970-01-01 01:00:00.000000000 +0100
-+++ ../git/board/sama5d27_sd96/sama5d27_sd96sd_uboot_defconfig	2020-08-07 12:28:19.576618683 +0200
-@@ -0,0 +1,7 @@
-+CONFIG_SAMA5D27_SD96=y
-+CONFIG_RAM_128MB=y
-+CONFIG_SDCARD=y
-+CONFIG_SDHC1=y
-+CONFIG_JUMP_ADDR="0x23f00000"
-+CONFIG_DEBUG=y
-+# CONFIG_ENTER_NWD is not set
-diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96spi_uboot_defconfig ../git/board/sama5d27_sd96/sama5d27_sd96spi_uboot_defconfig
---- ./board/sama5d27_sd96/sama5d27_sd96spi_uboot_defconfig	1970-01-01 01:00:00.000000000 +0100
-+++ ../git/board/sama5d27_sd96/sama5d27_sd96spi_uboot_defconfig	2020-08-07 12:28:19.576618683 +0200
+diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96qspi_uboot_defconfig ../git/board/sama5d27_sd96/sama5d27_sd96qspi_uboot_defconfig
+--- ./board/sama5d27_sd96/sama5d27_sd96qspi_uboot_defconfig	1970-01-01 01:00:00.000000000 +0100
++++ ../git/board/sama5d27_sd96/sama5d27_sd96qspi_uboot_defconfig	2020-12-17 09:57:43.151013205 +0100
 @@ -0,0 +1,10 @@
 +CONFIG_SAMA5D27_SD96=y
 +CONFIG_RAM_128MB=y
@@ -787,20 +774,43 @@ diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96spi_uboot_defconfig ../git/board/
 +CONFIG_JUMP_ADDR="0x23f00000"
 +CONFIG_DEBUG=y
 +# CONFIG_ENTER_NWD is not set
+diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96sd_linux_image_dt_defconfig ../git/board/sama5d27_sd96/sama5d27_sd96sd_linux_image_dt_defconfig
+--- ./board/sama5d27_sd96/sama5d27_sd96sd_linux_image_dt_defconfig	1970-01-01 01:00:00.000000000 +0100
++++ ../git/board/sama5d27_sd96/sama5d27_sd96sd_linux_image_dt_defconfig	2020-12-17 09:57:43.151013205 +0100
+@@ -0,0 +1,8 @@
++CONFIG_SAMA5D27_SD96=y
++CONFIG_RAM_128MB=y
++CONFIG_SDCARD=y
++CONFIG_LOAD_LINUX=y
++CONFIG_OVERRIDE_CMDLINE=y
++CONFIG_IMAGE_NAME="zImage"
++CONFIG_DEBUG=y
++# CONFIG_ENTER_NWD is not set
+diff -Naurw ./board/sama5d27_sd96/sama5d27_sd96sd_uboot_defconfig ../git/board/sama5d27_sd96/sama5d27_sd96sd_uboot_defconfig
+--- ./board/sama5d27_sd96/sama5d27_sd96sd_uboot_defconfig	1970-01-01 01:00:00.000000000 +0100
++++ ../git/board/sama5d27_sd96/sama5d27_sd96sd_uboot_defconfig	2020-12-17 09:58:59.923293557 +0100
+@@ -0,0 +1,7 @@
++CONFIG_SAMA5D27_SD96=y
++CONFIG_RAM_128MB=y
++CONFIG_SDCARD=y
++CONFIG_SDHC1=y
++CONFIG_JUMP_ADDR="0x23f00000"
++CONFIG_DEBUG=y
++# CONFIG_ENTER_NWD is not set
 diff -Naurw ./Config.in.kernel ../git/Config.in.kernel
---- ./Config.in.kernel	2020-08-07 13:15:44.767210996 +0200
-+++ ../git/Config.in.kernel	2020-08-07 12:55:31.847756826 +0200
-@@ -29,6 +29,7 @@
+--- ./Config.in.kernel	2020-12-17 09:57:56.502365343 +0100
++++ ../git/Config.in.kernel	2020-12-17 09:57:43.151013205 +0100
+@@ -32,6 +32,7 @@
  source "board/sama5d2_ptc_ek/Config.in.linux_arg"
  source "board/sama5d2_xplained/Config.in.linux_arg"
  source "board/sama5d2_icp/Config.in.linux_arg"
 +source "board/sama5d27_sd96/Config.in.linux_arg"
  source "board/sama5d27_som1_ek/Config.in.linux_arg"
  source "board/sama5d27_wlsom1_ek/Config.in.linux_arg"
- source "contrib/board/Config.in.linux_arg"
+ source "board/sama7g5ek/Config.in.linux_arg"
 diff -Naurw ./include/board.h ../git/include/board.h
---- ./include/board.h	2020-08-07 13:15:44.779210527 +0200
-+++ ../git/include/board.h	2020-08-07 12:52:22.967261422 +0200
+--- ./include/board.h	2020-12-17 09:57:56.514364761 +0100
++++ ../git/include/board.h	2020-12-17 09:57:43.151013205 +0100
 @@ -108,6 +108,10 @@
  #include "sama5d2_xplained.h"
  #endif
