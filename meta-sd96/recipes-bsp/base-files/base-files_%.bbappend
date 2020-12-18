@@ -51,7 +51,7 @@ do_install_append () {
 
     cat >> ${D}${sysconfdir}/fstab <<EOF
 
-/dev/mmcblk1p3 swap swap defaults 0 0
+/dev/mmcblk0p3 swap swap defaults 0 0
 
 EOF
 }
