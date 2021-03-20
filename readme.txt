@@ -13,7 +13,7 @@ simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/dunfell
     The required steps:
     - create a working directory and enter it
     - initialize the build folders by issuing:
-      $ repo init -u https://github.com/bkardosa/meta-sd96.git -b dunfell
+      $ repo init -u https://github.com/ArrowElectronics/meta-sd96.git -b dunfell
       $ repo sync
 
     - the above commands may display various warning or error messages which can be ignored if the

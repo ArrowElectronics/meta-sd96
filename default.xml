@@ -11,7 +11,7 @@
   <project name="linux4sam/meta-atmel" path="meta-atmel" remote="github" revision="18f5e1b1b4ff786c8a40d84ac6ae16c955e378dd"/>
   <project name="aws/meta-aws" path="meta-aws" remote="github" revision="e34ed15a87e36fa4199c63a184630fa370abac55"/>
 
-  <project name="bkardosa/meta-sd96" path="meta-sd96" remote="github" revision="refs/tags/v1.0.6">
+  <project name="ArrowElectronics/meta-sd96" path="meta-sd96" remote="github" revision="refs/tags/v1.0.6">
     <copyfile src="build-sd96/conf/local.conf" dest="poky/build-sd96/conf/local.conf"/>
     <copyfile src="build-sd96/conf/bblayers.conf" dest="poky/build-sd96/conf/bblayers.conf"/>
   </project>
