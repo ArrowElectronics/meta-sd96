@@ -13,7 +13,7 @@ simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/dunfell
     The required steps:
     - create a working directory and enter it
     - initialize the build folders by issuing:
-      $ repo init -u https://github.com/bkardosa/meta-sd96.git -b dunfell-wlsom1
+      $ repo init -u https://github.com/ArrowElectronics/meta-sd96.git -b dunfell-wlsom1
       $ repo sync
 
     - the above commands may display various warning or error messages which can be ignored if the
@@ -24,6 +24,7 @@ simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/dunfell
     - the following commands need to be executed for rebuilding the image:
       $ cd poky
       $ export TEMPLATECONF=${TEMPLATECONF:-../meta-atmel/conf}
+      $ export MACHINE=sama5d27-wlsom1-ek-sd
       $ source oe-init-build-env build-wlsom1
       $ bitbake hostapd-image
 

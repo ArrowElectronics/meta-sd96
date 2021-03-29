@@ -13,7 +13,7 @@ simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/dunfell
     The required steps:
     - create a working directory and enter it
     - initialize the build folders by issuing:
-      $ repo init -u https://github.com/bkardosa/meta-sd96.git -b dunfell
+      $ repo init -u https://github.com/ArrowElectronics/meta-sd96.git -b dunfell-wlsom1
       $ repo sync
 
     - the above commands may display various warning or error messages which can be ignored if the
@@ -24,8 +24,8 @@ simpler. See meta-atmel: https://github.com/linux4sam/meta-atmel/tree/dunfell
     - the following commands need to be executed for rebuilding the image:
       $ cd poky
       $ export TEMPLATECONF=${TEMPLATECONF:-../meta-atmel/conf}
-      $ export MACHINE=sama5d27-sd96
-      $ source oe-init-build-env build-sd96
+      $ export MACHINE=sama5d27-wlsom1-ek-sd
+      $ source oe-init-build-env build-wlsom1
       $ bitbake hostapd-image
 
     Rebuilding the image will take 1-2 hours or more depending on machine and
@@ -37,8 +37,8 @@ internet speed and require around 25GiB disk space.
     Creating uSD card image
 
     - copy initial filesystem image to uSD card:
-      $ cd tmp/deploy/images/sama5d27-sd96/
-      $ sudo dd if=hostapd-image-sama5d27-sd96.wic bs=1M of=/dev/sdX && sync
+      $ cd tmp/deploy/images/sama5d27-wlsom1-ek-sd/
+      $ sudo dd if=hostapd-image-sama5d27-wlsom1.wic bs=1M of=/dev/sdX && sync
       where /dev/sdX is the location of an UNMOUNTED uSD card
 
     Booting from uSD card
@@ -54,7 +54,7 @@ internet speed and require around 25GiB disk space.
 
     Writing at91bootstrap into NOR flash and booting from NOR
 
-    - prepare at91bootstrap for SAM-BA (still in .../tmp/deploy/images/sama5d27-sd96 folder ):
+    - prepare at91bootstrap for SAM-BA (still in .../tmp/deploy/images/sama5d27-wlsom1-ek-sd folder ):
       $ cp at91bootstrap.bin <SAM-BA folder>
 
     - on Shield96 board remove J3, remove uSD card, connect J10 to PC and press nRST
